@@ -1,0 +1,4 @@
+sentry
+psycopg2
+gevent
+dj-database-url
