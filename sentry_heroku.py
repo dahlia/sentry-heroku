@@ -1,11 +1,11 @@
 import os
 
-from dj_database_url import config
+import dj_database_url
 from sentry.conf.server import *
 
 
 DATABASES = {
-    'default': config(default='postgres://localhost')
+    'default': dj_database_url.config(default='postgres://localhost')
 }
 
 SENTRY_KEY = str(DATABASES['default'])
