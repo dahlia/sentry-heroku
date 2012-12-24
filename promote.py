@@ -13,7 +13,6 @@ app_id = sys.argv[1]
 with os.popen('heroku auth:whoami') as out:
     email = out.read().strip()
 username = sys.argv[2] if len(sys.argv) > 2 else email[:email.index('@')]
-os.system('heroku apps:create ' + app_id)
 with os.popen('heroku addons:add heroku-postgresql:dev') as out:
     match = re.search('HEROKU_POSTGRESQL_[A-Z_]+', out.read())
 os.system('heroku pg:promote ' + match.group(0))
