@@ -5,8 +5,11 @@ It's a small Heroku app source tree that runs your own Sentry_ service.
 
 .. code-block:: console
 
+   $ heroku login
+   $ heroku create my-sentry
    $ git clone git://github.com/dahlia/sentry-heroku.git
    $ cd sentry-heroku/
+   $ git push heroku master
    $ ./promote.py my-sentry yourusername
    Creating my-sentry... done, stack is cedar
    http://my-sentry.herokuapp.com/ | git@heroku.com:my-sentry.git
