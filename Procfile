@@ -1,1 +1,1 @@
-web: sentry --config=sentry_heroku.py start
+web: bin/start-nginx uwsgi uwsgi.ini

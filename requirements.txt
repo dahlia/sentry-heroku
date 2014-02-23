@@ -1,4 +1,4 @@
 sentry
 psycopg2
-gevent
+uwsgi
 dj-database-url

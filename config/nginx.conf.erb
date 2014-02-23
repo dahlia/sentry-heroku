@@ -1,0 +1,42 @@
+daemon off;
+#Heroku dynos have 4 cores.
+worker_processes 4;
+
+events {
+  use epoll;
+  accept_mutex on;
+  worker_connections 1024;
+}
+
+http {
+  gzip on;
+  gzip_comp_level 2;
+  gzip_min_length 512;
+
+  log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
+  access_log logs/nginx/access.log l2met;
+  error_log logs/nginx/error.log;
+
+  include mime.types;
+  default_type application/octet-stream;
+  sendfile on;
+
+  #Must read the body in 5 seconds.
+  client_body_timeout 5;
+
+  server {
+    listen <%= ENV["PORT"] %>;
+    server_name _;
+    keepalive_timeout 5;
+
+    location /_static {
+      alias .heroku/python/lib/python2.7/site-packages/sentry/static/CACHE;
+    }
+
+    location / {
+      include uwsgi_params;
+      more_set_headers 'X-Request-Id: $http_x_request_id';
+      uwsgi_pass unix:/tmp/nginx.socket;
+    }
+  }
+}
